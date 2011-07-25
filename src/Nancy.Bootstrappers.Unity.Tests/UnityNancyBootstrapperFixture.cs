@@ -30,7 +30,7 @@
         }
 
         [Fact]
-        public void GetAllModules_Returns_As_MultiInstance()
+        public void GetAllModules_Returns_Same_Instance_With_Same_Context()
         {
             // Given
             this.bootstrapper.GetEngine();
@@ -43,11 +43,29 @@
             // Then
             output1.ShouldNotBeNull();
             output2.ShouldNotBeNull();
+            output1.ShouldBeSameAs(output2);
+        }
+
+        [Fact]
+        public void GetAllModules_With_Different_Contexts_Returns_Different_Instances()
+        {
+            // Given
+            this.bootstrapper.GetEngine();
+            var context = new NancyContext();
+            var context2 = new NancyContext();
+
+            // When
+            var output1 = this.bootstrapper.GetAllModules(context).Where(nm => nm.GetType() == typeof(FakeNancyModuleWithBasePath)).FirstOrDefault();
+            var output2 = this.bootstrapper.GetAllModules(context2).Where(nm => nm.GetType() == typeof(FakeNancyModuleWithBasePath)).FirstOrDefault();
+
+            // Then
+            output1.ShouldNotBeNull();
+            output2.ShouldNotBeNull();
             output1.ShouldNotBeSameAs(output2);
         }
 
         [Fact]
-        public void GetModuleByKey_Returns_As_MultiInstance()
+        public void GetModuleByKey_Returns_Same_Instance_With_Same_Context()
         {
             // Given
             this.bootstrapper.GetEngine();
@@ -60,7 +78,25 @@
             // Then
             output1.ShouldNotBeNull();
             output2.ShouldNotBeNull();
-            output1.ShouldNotBeSameAs(output2);
+            output1.ShouldBeSameAs(output2);
+        }
+
+        [Fact]
+        public void Get_Module_By_Key_With_Different_Contexts_Returns_Different_Instances()
+        {
+            // Given
+            this.bootstrapper.GetEngine();
+            var context = new NancyContext();
+            var context2 = new NancyContext();
+
+            // When
+            var result = this.bootstrapper.GetModuleByKey(new DefaultModuleKeyGenerator().GetKeyForModuleType(typeof(FakeNancyModuleWithDependency)), context) as FakeNancyModuleWithDependency;
+            var result2 = this.bootstrapper.GetModuleByKey(new DefaultModuleKeyGenerator().GetKeyForModuleType(typeof(FakeNancyModuleWithDependency)), context2) as FakeNancyModuleWithDependency;
+
+            // Then
+            result.FooDependency.ShouldNotBeNull();
+            result2.FooDependency.ShouldNotBeNull();
+            result.ShouldNotBeSameAs(result2);
         }
 
         [Fact]
@@ -113,37 +149,6 @@
             this.bootstrapper.Container.Resolve<IModuleKeyGenerator>();
             this.bootstrapper.Container.Resolve<IRouteCache>();
             this.bootstrapper.Container.Resolve<IRouteCacheProvider>();
-        }
-
-        [Fact]
-        public void Get_Module_By_Key_Gives_Same_Request_Lifetime_Instance_To_Each_Dependency()
-        {
-            // Given
-            this.bootstrapper.GetEngine();
-
-            // When
-            var result = this.bootstrapper.GetModuleByKey(new DefaultModuleKeyGenerator().GetKeyForModuleType(typeof(FakeNancyModuleWithDependency)), new NancyContext()) as FakeNancyModuleWithDependency;
-
-            // Then
-            result.FooDependency.ShouldNotBeNull();
-            result.FooDependency.ShouldBeSameAs(result.Dependency.FooDependency);
-        }
-
-        [Fact]
-        public void Get_Module_By_Key_Gives_Different_Request_Lifetime_Instance_To_Each_Call()
-        {
-            // Given
-            this.bootstrapper.GetEngine();
-            var context = new NancyContext();
-
-            // When
-            var result = this.bootstrapper.GetModuleByKey(new DefaultModuleKeyGenerator().GetKeyForModuleType(typeof(FakeNancyModuleWithDependency)), context) as FakeNancyModuleWithDependency;
-            var result2 = this.bootstrapper.GetModuleByKey(new DefaultModuleKeyGenerator().GetKeyForModuleType(typeof(FakeNancyModuleWithDependency)), context) as FakeNancyModuleWithDependency;
-
-            // Then
-            result.FooDependency.ShouldNotBeNull();
-            result2.FooDependency.ShouldNotBeNull();
-            result.FooDependency.ShouldNotBeSameAs(result2.FooDependency);
         }
     }
 }

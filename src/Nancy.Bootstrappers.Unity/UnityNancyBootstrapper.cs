@@ -138,7 +138,8 @@
                 container.RegisterType(
                     typeof(NancyModule),
                     moduleRegistrationType.ModuleType,
-                    moduleRegistrationType.ModuleKey);
+                    moduleRegistrationType.ModuleKey,
+                    new ContainerControlledLifetimeManager());
             }
         }
 
