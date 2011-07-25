@@ -25,6 +25,12 @@ namespace Nancy.BootStrappers.Unity.Tests
             container.RegisterType<IDependency, Dependency>(new ContainerControlledLifetimeManager());
         }
 
+        protected override IUnityContainer CreateRequestContainer()
+        {
+            this.RequestContainerConfigured = true;
+            return base.CreateRequestContainer();
+        }
+
         protected override void ConfigureApplicationContainer(IUnityContainer existingContainer)
         {
             ApplicationContainerConfigured = true;
