@@ -32,10 +32,13 @@
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Practices.ServiceLocation">
-      <HintPath>..\Nancy.Bootstrappers.Unity\Binaries\Microsoft.Practices.ServiceLocation.dll</HintPath>
+      <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.Practices.Unity">
-      <HintPath>..\Nancy.Bootstrappers.Unity\Binaries\Microsoft.Practices.Unity.dll</HintPath>
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.Practices.Unity.Configuration">
+      <HintPath>..\packages\Unity.2.1.505.0\lib\NET35\Microsoft.Practices.Unity.Configuration.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -45,29 +48,24 @@
     <Reference Include="System.Data" />
     <Reference Include="System.Xml" />
     <Reference Include="xunit">
-      <HintPath>..\..\..\dependencies\Nancy\dependencies\xunit\xunit.dll</HintPath>
-    </Reference>
-    <Reference Include="xunit.extensions">
-      <HintPath>..\..\..\dependencies\Nancy\dependencies\xunit\xunit.extensions.dll</HintPath>
+      <HintPath>..\packages\xunit.1.8.0.1545\lib\xunit.dll</HintPath>
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="..\..\..\dependencies\Nancy\src\Nancy.Tests\Fakes\FakeNancyModuleWithBasePath.cs">
-      <Link>Shared\FakeNancyModuleWithBasePath.cs</Link>
+    <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\Fakes\FakeNancyModuleWithBasePath.cs">
+      <Link>Fakes\FakeNancyModuleWithBasePath.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\dependencies\Nancy\src\Nancy.Tests\Fakes\FakeNancyModuleWithDependency.cs">
-      <Link>Shared\FakeNancyModuleWithDependency.cs</Link>
+    <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\Fakes\FakeNancyModuleWithDependency.cs">
+      <Link>Fakes\FakeNancyModuleWithDependency.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\dependencies\Nancy\src\Nancy.Tests\ShouldExtensions.cs">
-      <Link>Shared\ShouldExtensions.cs</Link>
+    <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\ShouldExtensions.cs">
+      <Link>ShouldExtensions.cs</Link>
     </Compile>
-    <Compile Include="..\..\..\dependencies\Nancy\src\SharedAssemblyInfo.cs">
-      <Link>Properties\SharedAssemblyInfo.cs</Link>
-    </Compile>
-    <Compile Include="UnityNancyBootStrapperFixture.cs" />
+    <Compile Include="FakeUnityNancyBootstrapper.cs" />
+    <Compile Include="UnityNancyBootstrapperFixture.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\dependencies\Nancy\src\Nancy\Nancy.csproj">
+    <ProjectReference Include="..\..\dependencies\Nancy\src\Nancy\Nancy.csproj">
       <Project>{34576216-0DCA-4B0F-A0DC-9075E75A676F}</Project>
       <Name>Nancy</Name>
     </ProjectReference>
@@ -75,6 +73,12 @@
       <Project>{79FF920D-9313-46B6-8AA9-6B7406AD742A}</Project>
       <Name>Nancy.Bootstrappers.Unity</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
