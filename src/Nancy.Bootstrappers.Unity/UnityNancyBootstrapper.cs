@@ -79,6 +79,10 @@
             container.RegisterType(typeof(IEnumerable<ITypeConverter>), typeof(UnityEnumerableShim<ITypeConverter>));
             container.RegisterType(typeof(IEnumerable<IBodyDeserializer>), typeof(UnityEnumerableShim<IBodyDeserializer>));
             container.RegisterType(typeof(IEnumerable<IStartup>), typeof(UnityEnumerableShim<IStartup>));
+
+            // Added this in here because Unity doesn't seem to support
+            // resolving using the greediest resolvable constructor
+            container.RegisterType<IFileSystemReader, DefaultFileSystemReader>(new ContainerControlledLifetimeManager());
         }
 
         /// <summary>
