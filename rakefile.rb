@@ -147,5 +147,5 @@ def get_assembly_version(file)
     end
   end
 
-  return ''
+  ''
 end
