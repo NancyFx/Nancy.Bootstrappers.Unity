@@ -15,10 +15,8 @@ namespace Nancy.BootStrappers.Unity.Tests
 
         public bool RequestContainerConfigured { get; set; }
 
-        protected override void InitialiseInternal(IUnityContainer container)
+        protected override void ApplicationStartup(IUnityContainer container, Bootstrapper.IPipelines pipelines)
         {
-            base.InitialiseInternal(container);
-
             RequestContainerConfigured = true;
 
             container.RegisterType<IFoo, Foo>(new ContainerControlledLifetimeManager());
