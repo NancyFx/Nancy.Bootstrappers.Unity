@@ -14,12 +14,22 @@
     public abstract class UnityNancyBootstrapper : NancyBootstrapperWithRequestContainerBase<IUnityContainer>
     {
         /// <summary>
-        /// Gets all registered startup tasks
+        /// Gets all registered application startup tasks
         /// </summary>
-        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IStartup"/> instances. </returns>
-        protected override IEnumerable<IStartup> GetStartupTasks()
+        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IApplicationStartup"/> instances. </returns>
+        protected override IEnumerable<IApplicationStartup> GetApplicationStartupTasks()
         {
-            return this.ApplicationContainer.ResolveAll<IStartup>();
+            return this.ApplicationContainer.ResolveAll<IApplicationStartup>();
+        }
+
+        /// <summary>
+        /// Gets all registered request startup tasks
+        /// </summary>
+        /// <param name="container">Request container instance</param>
+        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IRequestStartup"/> instances. </returns>
+        protected override IEnumerable<IRequestStartup> GetRequestStartupTasks(IUnityContainer container)
+        {
+            return container.ResolveAll<IRequestStartup>();
         }
 
         /// <summary>
@@ -79,7 +89,8 @@
             container.RegisterType(typeof(IEnumerable<IModelBinder>), typeof(UnityEnumerableShim<IModelBinder>));
             container.RegisterType(typeof(IEnumerable<ITypeConverter>), typeof(UnityEnumerableShim<ITypeConverter>));
             container.RegisterType(typeof(IEnumerable<IBodyDeserializer>), typeof(UnityEnumerableShim<IBodyDeserializer>));
-            container.RegisterType(typeof(IEnumerable<IStartup>), typeof(UnityEnumerableShim<IStartup>));
+            container.RegisterType(typeof(IEnumerable<IApplicationStartup>), typeof(UnityEnumerableShim<IApplicationStartup>));
+            container.RegisterType(typeof(IEnumerable<IRequestStartup>), typeof(UnityEnumerableShim<IRequestStartup>));
             container.RegisterType(typeof(IEnumerable<ISerializer>), typeof(UnityEnumerableShim<ISerializer>));
             container.RegisterType(typeof(IEnumerable<IErrorHandler>), typeof(UnityEnumerableShim<IErrorHandler>));
 
