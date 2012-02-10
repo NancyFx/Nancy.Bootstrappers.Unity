@@ -7,9 +7,10 @@
     using Nancy.ErrorHandling;
     using Nancy.ModelBinding;
     using Nancy.ViewEngines;
+    using Validation;
 
     /// <summary>
-    /// Defines the functionality of a Nancy boostrapper based on the Unity container.
+    /// Nancy bootstrapper for the Unity container.
     /// </summary>
     public abstract class UnityNancyBootstrapper : NancyBootstrapperWithRequestContainerBase<IUnityContainer>
     {
@@ -82,6 +83,7 @@
             container.RegisterType(typeof(IEnumerable<IStartup>), typeof(UnityEnumerableShim<IStartup>));
             container.RegisterType(typeof(IEnumerable<ISerializer>), typeof(UnityEnumerableShim<ISerializer>));
             container.RegisterType(typeof(IEnumerable<IErrorHandler>), typeof(UnityEnumerableShim<IErrorHandler>));
+            container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
