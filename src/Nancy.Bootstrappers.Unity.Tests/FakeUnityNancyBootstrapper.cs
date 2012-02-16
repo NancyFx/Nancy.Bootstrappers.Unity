@@ -18,9 +18,6 @@ namespace Nancy.BootStrappers.Unity.Tests
         protected override void ApplicationStartup(IUnityContainer container, Bootstrapper.IPipelines pipelines)
         {
             RequestContainerConfigured = true;
-
-            container.RegisterType<IFoo, Foo>(new ContainerControlledLifetimeManager());
-            container.RegisterType<IDependency, Dependency>(new ContainerControlledLifetimeManager());
         }
 
         protected override IUnityContainer CreateRequestContainer()
@@ -33,6 +30,9 @@ namespace Nancy.BootStrappers.Unity.Tests
         {
             ApplicationContainerConfigured = true;
             base.ConfigureApplicationContainer(existingContainer);
+
+            existingContainer.RegisterType<IFoo, Foo>(new ContainerControlledLifetimeManager());
+            existingContainer.RegisterType<IDependency, Dependency>(new ContainerControlledLifetimeManager());
         }
     }
 }
