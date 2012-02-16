@@ -1,6 +1,8 @@
 ﻿namespace Nancy.Bootstrappers.Unity
 {
+    using System;
     using System.Collections.Generic;
+    using Diagnostics;
     using Microsoft.Practices.Unity;
     using Bootstrapper;
 
@@ -84,6 +86,7 @@
             container.RegisterType(typeof(IEnumerable<ISerializer>), typeof(UnityEnumerableShim<ISerializer>));
             container.RegisterType(typeof(IEnumerable<IErrorHandler>), typeof(UnityEnumerableShim<IErrorHandler>));
             container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
+            container.RegisterType(typeof(IEnumerable<IDiagnosticsProvider>), typeof(UnityEnumerableShim<IDiagnosticsProvider>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
@@ -105,6 +108,7 @@
                     container.RegisterType(
                         collectionTypeRegistration.RegistrationType,
                         implementationType,
+                        implementationType.ToString(),
                         new ContainerControlledLifetimeManager());
                 }
             }
