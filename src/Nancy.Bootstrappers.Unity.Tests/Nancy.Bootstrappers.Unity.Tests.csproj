@@ -53,14 +53,18 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\Fakes\FakeNancyModuleWithBasePath.cs">
-      <Link>Fakes\FakeNancyModuleWithBasePath.cs</Link>
+      <Link>FakeNancyModuleWithBasePath.cs</Link>
     </Compile>
     <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\Fakes\FakeNancyModuleWithDependency.cs">
-      <Link>Fakes\FakeNancyModuleWithDependency.cs</Link>
+      <Link>FakeNancyModuleWithDependency.cs</Link>
     </Compile>
     <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\ShouldExtensions.cs">
       <Link>ShouldExtensions.cs</Link>
     </Compile>
+    <Compile Include="..\..\dependencies\Nancy\src\Nancy.Tests\Unit\Bootstrapper\Base\BootstrapperBaseFixtureBase.cs">
+      <Link>BootstrapperBaseFixtureBase.cs</Link>
+    </Compile>
+    <Compile Include="BootstrapperBaseFixture.cs" />
     <Compile Include="FakeUnityNancyBootstrapper.cs" />
     <Compile Include="UnityNancyBootstrapperFixture.cs" />
   </ItemGroup>
