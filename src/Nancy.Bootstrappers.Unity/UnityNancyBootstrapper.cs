@@ -1,11 +1,9 @@
 ﻿namespace Nancy.Bootstrappers.Unity
 {
-    using System;
     using System.Collections.Generic;
     using Diagnostics;
     using Microsoft.Practices.Unity;
     using Bootstrapper;
-
     using Nancy.ErrorHandling;
     using Nancy.ModelBinding;
     using Nancy.ViewEngines;
@@ -19,10 +17,19 @@
         /// <summary>
         /// Gets all registered startup tasks
         /// </summary>
-        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IStartup"/> instances. </returns>
-        protected override IEnumerable<IStartup> GetStartupTasks()
+        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IApplicationStartup"/> instances. </returns>
+        protected override IEnumerable<IApplicationStartup> GetApplicationStartupTasks()
         {
-            return this.ApplicationContainer.ResolveAll<IStartup>();
+            return this.ApplicationContainer.ResolveAll<IApplicationStartup>();
+        }
+
+        /// <summary>
+        /// Gets all registered application registration tasks
+        /// </summary>
+        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IApplicationRegistrations"/> instances.</returns>
+        protected override IEnumerable<IApplicationRegistrations> GetApplicationRegistrationTasks()
+        {
+            return this.ApplicationContainer.ResolveAll<IApplicationRegistrations>();
         }
 
         /// <summary>
@@ -82,7 +89,8 @@
             container.RegisterType(typeof(IEnumerable<IModelBinder>), typeof(UnityEnumerableShim<IModelBinder>));
             container.RegisterType(typeof(IEnumerable<ITypeConverter>), typeof(UnityEnumerableShim<ITypeConverter>));
             container.RegisterType(typeof(IEnumerable<IBodyDeserializer>), typeof(UnityEnumerableShim<IBodyDeserializer>));
-            container.RegisterType(typeof(IEnumerable<IStartup>), typeof(UnityEnumerableShim<IStartup>));
+            container.RegisterType(typeof(IEnumerable<IApplicationStartup>), typeof(UnityEnumerableShim<IApplicationStartup>));
+            container.RegisterType(typeof(IEnumerable<IApplicationRegistrations>), typeof(UnityEnumerableShim<IApplicationRegistrations>));
             container.RegisterType(typeof(IEnumerable<ISerializer>), typeof(UnityEnumerableShim<ISerializer>));
             container.RegisterType(typeof(IEnumerable<IErrorHandler>), typeof(UnityEnumerableShim<IErrorHandler>));
             container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
