@@ -7,6 +7,7 @@
     using Nancy.ErrorHandling;
     using Nancy.ModelBinding;
     using Nancy.ViewEngines;
+    using Responses.Negotiation;
     using Validation;
 
     /// <summary>
@@ -14,6 +15,15 @@
     /// </summary>
     public abstract class UnityNancyBootstrapper : NancyBootstrapperWithRequestContainerBase<IUnityContainer>
     {
+        /// <summary>
+        /// Gets the diagnostics for intialisation
+        /// </summary>
+        /// <returns>IDiagnostics implementation</returns>
+        protected override IDiagnostics GetDiagnostics()
+        {
+            return this.ApplicationContainer.Resolve<IDiagnostics>();
+        }
+
         /// <summary>
         /// Gets all registered startup tasks
         /// </summary>
@@ -95,6 +105,7 @@
             container.RegisterType(typeof(IEnumerable<IErrorHandler>), typeof(UnityEnumerableShim<IErrorHandler>));
             container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
             container.RegisterType(typeof(IEnumerable<IDiagnosticsProvider>), typeof(UnityEnumerableShim<IDiagnosticsProvider>));
+            container.RegisterType(typeof(IEnumerable<IResponseProcessor>), typeof(UnityEnumerableShim<IResponseProcessor>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
