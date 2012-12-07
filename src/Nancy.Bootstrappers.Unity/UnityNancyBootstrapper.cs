@@ -102,7 +102,7 @@
             container.RegisterType(typeof(IEnumerable<IApplicationStartup>), typeof(UnityEnumerableShim<IApplicationStartup>));
             container.RegisterType(typeof(IEnumerable<IApplicationRegistrations>), typeof(UnityEnumerableShim<IApplicationRegistrations>));
             container.RegisterType(typeof(IEnumerable<ISerializer>), typeof(UnityEnumerableShim<ISerializer>));
-            container.RegisterType(typeof(IEnumerable<IErrorHandler>), typeof(UnityEnumerableShim<IErrorHandler>));
+            container.RegisterType(typeof(IEnumerable<IStatusCodeHandler>), typeof(UnityEnumerableShim<IStatusCodeHandler>));
             container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
             container.RegisterType(typeof(IEnumerable<IDiagnosticsProvider>), typeof(UnityEnumerableShim<IDiagnosticsProvider>));
             container.RegisterType(typeof(IEnumerable<IResponseProcessor>), typeof(UnityEnumerableShim<IResponseProcessor>));
