@@ -168,7 +168,7 @@
             foreach (var moduleRegistrationType in moduleRegistrationTypes)
             {
                 container.RegisterType(
-                    typeof(NancyModule),
+                    typeof(INancyModule),
                     moduleRegistrationType.ModuleType,
                     moduleRegistrationType.ModuleKey,
                     new ContainerControlledLifetimeManager());
@@ -180,9 +180,9 @@
         /// </summary>
         /// <param name="container">Container to use</param>
         /// <returns>Collection of NancyModule instances</returns>
-        protected override IEnumerable<NancyModule> GetAllModules(IUnityContainer container)
+        protected override IEnumerable<INancyModule> GetAllModules(IUnityContainer container)
         {
-            return container.ResolveAll<NancyModule>();
+            return container.ResolveAll<INancyModule>();
         }
 
         /// <summary>
@@ -191,9 +191,9 @@
         /// <param name="container">Container to use</param>
         /// <param name="moduleKey">Module key of the module</param>
         /// <returns>NancyModule instance</returns>
-        protected override NancyModule GetModuleByKey(IUnityContainer container, string moduleKey)
+        protected override INancyModule GetModuleByKey(IUnityContainer container, string moduleKey)
         {
-            return container.Resolve<NancyModule>(moduleKey);
+            return container.Resolve<INancyModule>(moduleKey);
         }
     }
 }
