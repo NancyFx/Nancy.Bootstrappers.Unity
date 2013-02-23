@@ -1,5 +1,6 @@
 ﻿namespace Nancy.Bootstrappers.Unity
 {
+    using System;
     using System.Collections.Generic;
     using Diagnostics;
     using Microsoft.Practices.Unity;
@@ -18,7 +19,7 @@
         /// <summary>
         /// Gets the diagnostics for intialisation
         /// </summary>
-        /// <returns>IDiagnostics implementation</returns>
+        /// <returns>An <see cref="IDiagnostics"/> implementation</returns>
         protected override IDiagnostics GetDiagnostics()
         {
             return this.ApplicationContainer.Resolve<IDiagnostics>();
@@ -43,21 +44,12 @@
         }
 
         /// <summary>
-        /// Resolve INancyEngine
+        /// Resolve <see cref="INancyEngine"/>
         /// </summary>
-        /// <returns>INancyEngine implementation</returns>
+        /// <returns>An <see cref="INancyEngine"/> implementation</returns>
         protected override INancyEngine GetEngineInternal()
         {
             return this.ApplicationContainer.Resolve<INancyEngine>();
-        }
-
-        /// <summary>
-        /// Get the moduleKey generator
-        /// </summary>
-        /// <returns>IModuleKeyGenerator instance</returns>
-        protected override IModuleKeyGenerator GetModuleKeyGenerator()
-        {
-            return this.ApplicationContainer.Resolve<IModuleKeyGenerator>();
         }
 
         /// <summary>
@@ -72,7 +64,7 @@
         /// <summary>
         /// Register the bootstrapper's implemented types into the container.
         /// This is necessary so a user can pass in a populated container but not have
-        /// to take the responsibility of registering things like INancyModuleCatalog manually.
+        /// to take the responsibility of registering things like <see cref="INancyModuleCatalog"/> manually.
         /// </summary>
         /// <param name="applicationContainer">Application container to register into</param>
         protected override void RegisterBootstrapperTypes(IUnityContainer applicationContainer)
@@ -162,7 +154,7 @@
         /// Register the given module types into the request container
         /// </summary>
         /// <param name="container">Container to register into</param>
-        /// <param name="moduleRegistrationTypes">NancyModule types</param>
+        /// <param name="moduleRegistrationTypes">An <see cref="INancyModule"/> types</param>
         protected override void RegisterRequestContainerModules(IUnityContainer container, IEnumerable<ModuleRegistration> moduleRegistrationTypes)
         {
             foreach (var moduleRegistrationType in moduleRegistrationTypes)
@@ -170,7 +162,7 @@
                 container.RegisterType(
                     typeof(INancyModule),
                     moduleRegistrationType.ModuleType,
-                    moduleRegistrationType.ModuleKey,
+                    moduleRegistrationType.ModuleType.FullName,
                     new ContainerControlledLifetimeManager());
             }
         }
@@ -179,21 +171,23 @@
         /// Retrieve all module instances from the container
         /// </summary>
         /// <param name="container">Container to use</param>
-        /// <returns>Collection of NancyModule instances</returns>
+        /// <returns>Collection of An <see cref="INancyModule"/> instances</returns>
         protected override IEnumerable<INancyModule> GetAllModules(IUnityContainer container)
         {
             return container.ResolveAll<INancyModule>();
         }
 
         /// <summary>
-        /// Retreive a specific module instance from the container by its key
+        /// Retreive a specific module instance from the container
         /// </summary>
         /// <param name="container">Container to use</param>
-        /// <param name="moduleKey">Module key of the module</param>
-        /// <returns>NancyModule instance</returns>
-        protected override INancyModule GetModuleByKey(IUnityContainer container, string moduleKey)
+        /// <param name="moduleType">Type of the module</param>
+        /// <returns>An <see cref="INancyModule"/> instance</returns>
+        protected override INancyModule GetModule(IUnityContainer container, Type moduleType)
         {
-            return container.Resolve<INancyModule>(moduleKey);
+            container.RegisterType(typeof(INancyModule), moduleType, new ContainerControlledLifetimeManager());
+
+            return container.Resolve<INancyModule>();
         }
     }
 }
