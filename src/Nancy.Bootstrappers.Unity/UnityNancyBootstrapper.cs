@@ -10,6 +10,7 @@
     using Nancy.ViewEngines;
     using Responses.Negotiation;
     using Validation;
+    using ViewEngines.SuperSimpleViewEngine;
 
     /// <summary>
     /// Nancy bootstrapper for the Unity container.
@@ -98,6 +99,7 @@
             container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
             container.RegisterType(typeof(IEnumerable<IDiagnosticsProvider>), typeof(UnityEnumerableShim<IDiagnosticsProvider>));
             container.RegisterType(typeof(IEnumerable<IResponseProcessor>), typeof(UnityEnumerableShim<IResponseProcessor>));
+            container.RegisterType(typeof(IEnumerable<ISuperSimpleViewEngineMatcher>), typeof(UnityEnumerableShim<ISuperSimpleViewEngineMatcher>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
