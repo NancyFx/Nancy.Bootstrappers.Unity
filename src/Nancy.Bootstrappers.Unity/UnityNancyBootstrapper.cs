@@ -9,6 +9,7 @@
     using Nancy.ModelBinding;
     using Nancy.ViewEngines;
     using Responses.Negotiation;
+    using Routing.Constraints;
     using Validation;
     using ViewEngines.SuperSimpleViewEngine;
 
@@ -100,6 +101,7 @@
             container.RegisterType(typeof(IEnumerable<IDiagnosticsProvider>), typeof(UnityEnumerableShim<IDiagnosticsProvider>));
             container.RegisterType(typeof(IEnumerable<IResponseProcessor>), typeof(UnityEnumerableShim<IResponseProcessor>));
             container.RegisterType(typeof(IEnumerable<ISuperSimpleViewEngineMatcher>), typeof(UnityEnumerableShim<ISuperSimpleViewEngineMatcher>));
+            container.RegisterType(typeof(IEnumerable<IRouteSegmentConstraint>), typeof(UnityEnumerableShim<IRouteSegmentConstraint>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
