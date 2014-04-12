@@ -7,6 +7,7 @@
     using Bootstrapper;
     using Nancy.ErrorHandling;
     using Nancy.ModelBinding;
+    using Nancy.Routing;
     using Nancy.ViewEngines;
     using Responses.Negotiation;
     using Routing.Constraints;
@@ -39,10 +40,10 @@
         /// <summary>
         /// Gets all registered application registration tasks
         /// </summary>
-        /// <returns>An <see cref="IEnumerable{T}"/> instance containing <see cref="IApplicationRegistrations"/> instances.</returns>
-        protected override IEnumerable<IApplicationRegistrations> GetApplicationRegistrationTasks()
+        /// <returns>An <see cref="System.Collections.Generic.IEnumerable{T}"/> instance containing <see cref="IRegistrations"/> instances.</returns>
+        protected override IEnumerable<IRegistrations> GetRegistrationTasks()
         {
-            return this.ApplicationContainer.ResolveAll<IApplicationRegistrations>();
+            return this.ApplicationContainer.ResolveAll<IRegistrations>();
         }
 
         /// <summary>
@@ -102,6 +103,8 @@
             container.RegisterType(typeof(IEnumerable<IResponseProcessor>), typeof(UnityEnumerableShim<IResponseProcessor>));
             container.RegisterType(typeof(IEnumerable<ISuperSimpleViewEngineMatcher>), typeof(UnityEnumerableShim<ISuperSimpleViewEngineMatcher>));
             container.RegisterType(typeof(IEnumerable<IRouteSegmentConstraint>), typeof(UnityEnumerableShim<IRouteSegmentConstraint>));
+            container.RegisterType(typeof(IEnumerable<IDiagnostics>), typeof(UnityEnumerableShim<IDiagnostics>));
+            container.RegisterType(typeof(IEnumerable<IRouteMetadataProvider>), typeof(UnityEnumerableShim<IRouteMetadataProvider>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
