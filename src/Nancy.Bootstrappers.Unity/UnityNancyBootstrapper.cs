@@ -84,10 +84,25 @@
         {
             foreach (var typeRegistration in typeRegistrations)
             {
-                container.RegisterType(
-                    typeRegistration.RegistrationType,
-                    typeRegistration.ImplementationType,
-                    new ContainerControlledLifetimeManager());
+                switch (typeRegistration.Lifetime)
+                {
+                    case Lifetime.Transient:
+                        container.RegisterType(
+                            typeRegistration.RegistrationType,
+                            typeRegistration.ImplementationType,
+                            new TransientLifetimeManager());
+                        break;
+                    case Lifetime.Singleton:
+                        container.RegisterType(
+                            typeRegistration.RegistrationType,
+                            typeRegistration.ImplementationType,
+                            new ContainerControlledLifetimeManager());
+                        break;
+                    case Lifetime.PerRequest:
+                        throw new InvalidOperationException("Unable to directly register a per request lifetime.");
+                    default:
+                        throw new ArgumentOutOfRangeException();
+                }
             }
 
             container.RegisterType(typeof(IEnumerable<IViewEngine>), typeof(UnityEnumerableShim<IViewEngine>));
@@ -123,11 +138,27 @@
             {
                 foreach (var implementationType in collectionTypeRegistration.ImplementationTypes)
                 {
-                    container.RegisterType(
-                        collectionTypeRegistration.RegistrationType,
-                        implementationType,
-                        implementationType.ToString(),
-                        new ContainerControlledLifetimeManager());
+                    switch (collectionTypeRegistration.Lifetime)
+                    {
+                        case Lifetime.Transient:
+                            container.RegisterType(
+                                collectionTypeRegistration.RegistrationType,
+                                implementationType,
+                                implementationType.ToString(),
+                                new TransientLifetimeManager());
+                            break;
+                        case Lifetime.Singleton:
+                            container.RegisterType(
+                                collectionTypeRegistration.RegistrationType,
+                                implementationType,
+                                implementationType.ToString(),
+                                new ContainerControlledLifetimeManager());
+                            break;
+                        case Lifetime.PerRequest:
+                            throw new InvalidOperationException("Unable to directly register a per request lifetime.");
+                        default:
+                            throw new ArgumentOutOfRangeException();
+                    }
                 }
             }
         }
