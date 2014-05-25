@@ -1,5 +1,8 @@
 namespace Nancy.BootStrappers.Unity.Tests
 {
+    using System;
+    using System.Collections.Generic;
+
     using Bootstrapper;
     using Microsoft.Practices.Unity;
     using Nancy.Bootstrappers.Unity;

@@ -38,6 +38,26 @@
         }
 
         /// <summary>
+        /// Registers and resolves all request startup tasks
+        /// </summary>
+        /// <param name="container">Container to use</param>
+        /// <param name="requestStartupTypes">Types to register</param>
+        /// <returns>An <see cref="System.Collections.Generic.IEnumerable{T}"/> instance containing <see cref="IRequestStartup"/> instances.</returns>
+        protected override IEnumerable<IRequestStartup> RegisterAndGetRequestStartupTasks(IUnityContainer container, Type[] requestStartupTypes)
+        {
+            foreach (var requestStartupType in requestStartupTypes)
+            {
+                container.RegisterType(
+                    typeof(IRequestStartup),
+                    requestStartupType,
+                    requestStartupType.ToString(),
+                    new ContainerControlledLifetimeManager());
+            }
+
+            return container.ResolveAll<IRequestStartup>();
+        }
+
+        /// <summary>
         /// Gets all registered application registration tasks
         /// </summary>
         /// <returns>An <see cref="System.Collections.Generic.IEnumerable{T}"/> instance containing <see cref="IRegistrations"/> instances.</returns>
@@ -120,6 +140,7 @@
             container.RegisterType(typeof(IEnumerable<IRouteSegmentConstraint>), typeof(UnityEnumerableShim<IRouteSegmentConstraint>));
             container.RegisterType(typeof(IEnumerable<IDiagnostics>), typeof(UnityEnumerableShim<IDiagnostics>));
             container.RegisterType(typeof(IEnumerable<IRouteMetadataProvider>), typeof(UnityEnumerableShim<IRouteMetadataProvider>));
+            container.RegisterType(typeof(IEnumerable<IRequestStartup>), typeof(UnityEnumerableShim<IRequestStartup>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor
