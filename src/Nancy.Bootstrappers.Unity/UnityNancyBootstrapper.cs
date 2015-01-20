@@ -203,8 +203,9 @@
         /// <summary>
         /// Creates a per request child/nested container
         /// </summary>
+        /// <param name="context">Current context</param>
         /// <returns>Request container instance</returns>
-        protected override IUnityContainer CreateRequestContainer()
+        protected override IUnityContainer CreateRequestContainer(NancyContext context)
         {
             return this.ApplicationContainer.CreateChildContainer();
         }
