@@ -43,10 +43,10 @@ namespace Nancy.BootStrappers.Unity.Tests
             existingContainer.RegisterType<IDependency, Dependency>(new ContainerControlledLifetimeManager());
         }
 
-        protected override IUnityContainer CreateRequestContainer()
+        protected override IUnityContainer CreateRequestContainer(NancyContext context)
         {
             this.RequestContainerConfigured = true;
-            return base.CreateRequestContainer();
+            return base.CreateRequestContainer(context);
         }
 
         protected override NancyInternalConfiguration InternalConfiguration
