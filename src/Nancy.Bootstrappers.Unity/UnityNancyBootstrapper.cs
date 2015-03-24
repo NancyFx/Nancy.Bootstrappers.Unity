@@ -5,10 +5,10 @@
     using Diagnostics;
     using Microsoft.Practices.Unity;
     using Bootstrapper;
-    using Nancy.ErrorHandling;
-    using Nancy.ModelBinding;
-    using Nancy.Routing;
-    using Nancy.ViewEngines;
+    using ErrorHandling;
+    using ModelBinding;
+    using Routing;
+    using ViewEngines;
     using Responses.Negotiation;
     using Routing.Constraints;
     using Validation;
@@ -81,7 +81,11 @@
         /// <returns>Container instance</returns>
         protected override IUnityContainer GetApplicationContainer()
         {
-            return new UnityContainer();
+            var container = new UnityContainer();
+
+            container.AddNewExtension<EnumerableExtension>();
+
+            return container;
         }
 
         /// <summary>
@@ -124,23 +128,6 @@
                         throw new ArgumentOutOfRangeException();
                 }
             }
-
-            container.RegisterType(typeof(IEnumerable<IViewEngine>), typeof(UnityEnumerableShim<IViewEngine>));
-            container.RegisterType(typeof(IEnumerable<IModelBinder>), typeof(UnityEnumerableShim<IModelBinder>));
-            container.RegisterType(typeof(IEnumerable<ITypeConverter>), typeof(UnityEnumerableShim<ITypeConverter>));
-            container.RegisterType(typeof(IEnumerable<IBodyDeserializer>), typeof(UnityEnumerableShim<IBodyDeserializer>));
-            container.RegisterType(typeof(IEnumerable<IApplicationStartup>), typeof(UnityEnumerableShim<IApplicationStartup>));
-            container.RegisterType(typeof(IEnumerable<IApplicationRegistrations>), typeof(UnityEnumerableShim<IApplicationRegistrations>));
-            container.RegisterType(typeof(IEnumerable<ISerializer>), typeof(UnityEnumerableShim<ISerializer>));
-            container.RegisterType(typeof(IEnumerable<IStatusCodeHandler>), typeof(UnityEnumerableShim<IStatusCodeHandler>));
-            container.RegisterType(typeof(IEnumerable<IModelValidatorFactory>), typeof(UnityEnumerableShim<IModelValidatorFactory>));
-            container.RegisterType(typeof(IEnumerable<IDiagnosticsProvider>), typeof(UnityEnumerableShim<IDiagnosticsProvider>));
-            container.RegisterType(typeof(IEnumerable<IResponseProcessor>), typeof(UnityEnumerableShim<IResponseProcessor>));
-            container.RegisterType(typeof(IEnumerable<ISuperSimpleViewEngineMatcher>), typeof(UnityEnumerableShim<ISuperSimpleViewEngineMatcher>));
-            container.RegisterType(typeof(IEnumerable<IRouteSegmentConstraint>), typeof(UnityEnumerableShim<IRouteSegmentConstraint>));
-            container.RegisterType(typeof(IEnumerable<IDiagnostics>), typeof(UnityEnumerableShim<IDiagnostics>));
-            container.RegisterType(typeof(IEnumerable<IRouteMetadataProvider>), typeof(UnityEnumerableShim<IRouteMetadataProvider>));
-            container.RegisterType(typeof(IEnumerable<IRequestStartup>), typeof(UnityEnumerableShim<IRequestStartup>));
 
             // Added this in here because Unity doesn't seem to support
             // resolving using the greediest resolvable constructor

@@ -52,7 +52,8 @@
     <Compile Include="..\..\dependencies\Nancy\src\SharedAssemblyInfo.cs">
       <Link>Properties\SharedAssemblyInfo.cs</Link>
     </Compile>
-    <Compile Include="UnityEnumerableShim.cs" />
+    <Compile Include="EnumerableResolutionStrategy.cs" />
+    <Compile Include="EnumerableExtension.cs" />
     <Compile Include="UnityNancyBootstrapper.cs" />
   </ItemGroup>
   <ItemGroup>
