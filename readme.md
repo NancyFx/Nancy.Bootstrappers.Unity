@@ -46,6 +46,12 @@ protected override IUnityContainer GetApplicationContainer()
 }
 ```
 
+If you end up overriding `GetApplicationContainer()`, you will have to manually add the `EnumerableExtension` to your container so that it is able to resolve `IEnumerable<T>` types properly (something that Unity has poor support for).
+
+```c#
+container.AddNewExtension<EnumerableExtension>();
+```
+
 ## Contributors
 
 * [Andreas Håkansson](http://github.com/thecodejunkie)
