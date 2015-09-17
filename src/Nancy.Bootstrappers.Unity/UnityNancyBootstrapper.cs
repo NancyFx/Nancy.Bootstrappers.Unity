@@ -5,14 +5,7 @@
     using Diagnostics;
     using Microsoft.Practices.Unity;
     using Bootstrapper;
-    using ErrorHandling;
-    using ModelBinding;
-    using Routing;
     using ViewEngines;
-    using Responses.Negotiation;
-    using Routing.Constraints;
-    using Validation;
-    using ViewEngines.SuperSimpleViewEngine;
 
     /// <summary>
     /// Nancy bootstrapper for the Unity container.
@@ -81,11 +74,7 @@
         /// <returns>Container instance</returns>
         protected override IUnityContainer GetApplicationContainer()
         {
-            var container = new UnityContainer();
-
-            container.AddNewExtension<EnumerableExtension>();
-
-            return container;
+            return new UnityContainer();
         }
 
         /// <summary>
@@ -96,6 +85,12 @@
         /// <param name="applicationContainer">Application container to register into</param>
         protected override void RegisterBootstrapperTypes(IUnityContainer applicationContainer)
         {
+            // This is here to add the EnumerableExtension, even though someone
+            // used an external IUnityContainer (not created by this bootstrapper).
+            // It's probably not the best place for it, but it's called right after
+            // GetApplicationContainer in NancyBootstrapperBase.
+            applicationContainer.AddNewExtension<EnumerableExtension>();
+
             applicationContainer.RegisterInstance<INancyModuleCatalog>(this, new ContainerControlledLifetimeManager());
         }
 
