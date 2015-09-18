@@ -1,4 +1,9 @@
-﻿namespace Nancy.BootStrappers.Unity.Tests
+﻿using System.Collections.Generic;
+using Microsoft.Practices.Unity;
+using Nancy.ErrorHandling;
+using Nancy.ViewEngines;
+
+namespace Nancy.BootStrappers.Unity.Tests
 {
     using System.Linq;
     using Nancy.Tests;
@@ -67,7 +72,6 @@
         {
             // Given
             this.bootstrapper.GetEngine();
-            this.bootstrapper.RequestContainerConfigured = false;
 
             // When
             this.bootstrapper.GetAllModules(new NancyContext());
@@ -81,7 +85,6 @@
         {
             // Given
             this.bootstrapper.GetEngine();
-            this.bootstrapper.RequestContainerConfigured = false;
 
             // When
             this.bootstrapper.GetModule(typeof(FakeNancyModuleWithBasePath), new NancyContext());
@@ -97,6 +100,47 @@
 
             // Then
             this.bootstrapper.ApplicationContainerConfigured.ShouldBeTrue();
+        }
+
+        [Fact]
+        public void Container_Should_Resolve_IEnumerable()
+        {
+            // Given, When
+            var statusCodeHandlers = this.bootstrapper.Container.Resolve<IEnumerable<IStatusCodeHandler>>();
+
+            // Then
+            statusCodeHandlers.ShouldNotBeNull();
+            statusCodeHandlers.Count().ShouldBeGreaterThan(0);
+        }
+
+        [Fact]
+        public void External_Container_Should_Resolve_IEnumerable()
+        {
+            // Given
+            var container = new UnityContainer();
+            var unityBootstrapper = new FakeUnityNancyBootstrapper(container);
+            unityBootstrapper.Initialise();
+
+            // When
+            var statusCodeHandlers = unityBootstrapper.Container.Resolve<IEnumerable<IStatusCodeHandler>>();
+
+            // Then
+            statusCodeHandlers.ShouldNotBeNull();
+            statusCodeHandlers.Count().ShouldBeGreaterThan(0);
+        }
+
+        [Fact]
+        public void Child_Container_Should_Resolve_IEnumerable()
+        {
+            // Given
+            var child = this.bootstrapper.CreateRequestContainer();
+
+            // When
+            var statusCodeHandlers = child.Resolve<IEnumerable<IViewEngine>>();
+
+            // Then
+            statusCodeHandlers.ShouldNotBeNull();
+            statusCodeHandlers.Count().ShouldBeGreaterThan(0);
         }
     }
 }
