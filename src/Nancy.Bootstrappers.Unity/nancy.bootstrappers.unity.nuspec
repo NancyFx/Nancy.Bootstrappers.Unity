@@ -14,13 +14,13 @@
     <projectUrl>http://nancyfx.org</projectUrl>
 	<dependencies>
       <dependency id="Nancy" />
-	  <dependency id="Unity" version="2.1.505.0" />
+	  <dependency id="Unity" version="2.1.505.2" />
     </dependencies> 
     <tags>Nancy Unity</tags>
   </metadata>
   <files>
-    <file src="build\binaries\Nancy.Bootstrappers.Unity.dll" target="lib\net40" />
-    <file src="build\binaries\Nancy.Bootstrappers.Unity.pdb" target="lib\net40" />
+    <file src="build\binaries\Nancy.Bootstrappers.Unity.dll" target="lib\net45" />
+    <file src="build\binaries\Nancy.Bootstrappers.Unity.pdb" target="lib\net45" />
     <file src="src\Nancy.Bootstrappers.Unity\**\*.cs" target="src" />
   </files>
 </package>

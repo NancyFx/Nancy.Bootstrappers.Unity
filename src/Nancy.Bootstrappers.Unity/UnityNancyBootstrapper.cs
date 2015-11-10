@@ -1,4 +1,6 @@
-﻿namespace Nancy.Bootstrappers.Unity
+﻿using Nancy.Configuration;
+
+namespace Nancy.Bootstrappers.Unity
 {
     using System;
     using System.Collections.Generic;
@@ -66,6 +68,25 @@
         protected override INancyEngine GetEngineInternal()
         {
             return this.ApplicationContainer.Resolve<INancyEngine>();
+        }
+
+        /// <summary>
+        /// Gets the <see cref="INancyEnvironmentConfigurator"/> used by th.
+        /// </summary>
+        /// <returns>An <see cref="INancyEnvironmentConfigurator"/> instance.</returns>
+        protected override INancyEnvironmentConfigurator GetEnvironmentConfigurator()
+        {
+            return this.ApplicationContainer.Resolve<INancyEnvironmentConfigurator>();
+        }
+
+        /// <summary>
+        /// Registers an <see cref="INancyEnvironment"/> instance in the container.
+        /// </summary>
+        /// <param name="container">The container to register into.</param>
+        /// <param name="environment">The <see cref="INancyEnvironment"/> instance to register.</param>
+        protected override void RegisterNancyEnvironment(IUnityContainer container, INancyEnvironment environment)
+        {
+            container.RegisterInstance(environment);
         }
 
         /// <summary>
