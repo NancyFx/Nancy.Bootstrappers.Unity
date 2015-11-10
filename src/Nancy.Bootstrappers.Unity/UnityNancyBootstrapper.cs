@@ -1,11 +1,10 @@
-﻿using Nancy.Configuration;
-
 namespace Nancy.Bootstrappers.Unity
 {
     using System;
     using System.Collections.Generic;
     using Diagnostics;
     using Microsoft.Practices.Unity;
+    using Nancy.Configuration;
     using Bootstrapper;
     using ViewEngines;
 
