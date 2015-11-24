@@ -79,6 +79,16 @@ namespace Nancy.Bootstrappers.Unity
         }
 
         /// <summary>
+        /// Get the <see cref="INancyEnvironment" /> instance.
+        /// </summary>
+        /// <returns>An configured <see cref="INancyEnvironment" /> instance.</returns>
+        /// <remarks>The boostrapper must be initialised (<see cref="INancyBootstrapper.Initialise" />) prior to calling this.</remarks>
+        public override INancyEnvironment GetEnvironment()
+        {
+            return this.ApplicationContainer.Resolve<INancyEnvironment>();
+        }
+
+        /// <summary>
         /// Registers an <see cref="INancyEnvironment"/> instance in the container.
         /// </summary>
         /// <param name="container">The container to register into.</param>
