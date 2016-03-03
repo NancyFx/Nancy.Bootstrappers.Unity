@@ -1,5 +1,6 @@
 namespace Nancy.BootStrappers.Unity.Tests
 {
+    using System;
     using Bootstrapper;
     using Microsoft.Practices.Unity;
     using Bootstrappers.Unity;
@@ -9,14 +10,14 @@ namespace Nancy.BootStrappers.Unity.Tests
     {
         private readonly IUnityContainer container;
 
-        private readonly NancyInternalConfiguration configuration;
+        private readonly Func<ITypeCatalog, NancyInternalConfiguration> configuration;
 
         public FakeUnityNancyBootstrapper()
             : this(null, null)
         {
         }
 
-        public FakeUnityNancyBootstrapper(NancyInternalConfiguration configuration)
+        public FakeUnityNancyBootstrapper(Func<ITypeCatalog, NancyInternalConfiguration> configuration)
             : this(configuration, null)
         {
         }
@@ -26,7 +27,7 @@ namespace Nancy.BootStrappers.Unity.Tests
         {
         }
 
-        public FakeUnityNancyBootstrapper(NancyInternalConfiguration configuration, IUnityContainer container)
+        public FakeUnityNancyBootstrapper(Func<ITypeCatalog, NancyInternalConfiguration> configuration, IUnityContainer container)
         {
             this.configuration = configuration;
             this.container = container;
@@ -71,7 +72,7 @@ namespace Nancy.BootStrappers.Unity.Tests
             return base.CreateRequestContainer(context);
         }
 
-        protected override NancyInternalConfiguration InternalConfiguration
+        protected override Func<ITypeCatalog, NancyInternalConfiguration> InternalConfiguration
         {
             get { return this.configuration ?? base.InternalConfiguration; }
         }
