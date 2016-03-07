@@ -22,6 +22,7 @@ task :default => [:clean, :version, :compile, :xunit, :publish, :package]
 #Add the folders that should be cleaned as part of the clean task
 CLEAN.include(OUTPUT)
 CLEAN.include(FileList["src/**/#{CONFIGURATION}"])
+CLEAN.include(FileList["test/**/#{CONFIGURATION}"])
 
 desc "Update shared assemblyinfo file for the build"
 assemblyinfo :version => [:clean] do |asm|
@@ -53,7 +54,7 @@ end
 
 desc "Executes xUnit tests"
 xunit :xunit => [:compile] do |xunit|
-    tests = FileList["src/**/#{CONFIGURATION}/Nancy.Bootstrappers.Unity.Tests.dll"].exclude(/obj\//)
+    tests = FileList["test/**/#{CONFIGURATION}/Nancy.Bootstrappers.Unity.Tests.dll"].exclude(/obj\//)
     xunit.assemblies = tests
 end
 
