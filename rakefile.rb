@@ -8,7 +8,7 @@ NANCY_VERSION = ""
 OUTPUT = "build"
 CONFIGURATION = 'Release'
 SHARED_ASSEMBLY_INFO = 'dependencies/Nancy/SharedAssemblyInfo.cs'
-SOLUTION_FILE = 'src/Nancy.Bootstrappers.Unity.sln'
+SOLUTION_FILE = 'Nancy.Bootstrappers.Unity.sln'
 
 Albacore.configure do |config|
     config.log_level = :verbose
