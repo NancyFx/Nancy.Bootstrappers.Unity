@@ -1,0 +1,23 @@
+﻿{
+    "version": "2.0.0-*",
+
+    "description": "An Unity bootstrapper for the Nancy web framework.",
+    "authors": [ "Andreas Håkansson, Steven Robbins and contributors" ],
+    "tags": [ "Nancy", "Unity" ],
+    "projectUrl": "http://nancyfx.org",
+    "licenseUrl": "https://github.com/NancyFx/Nancy/blob/master/license.txt",
+    "iconUrl": "http://nancyfx.org/nancy-nuget.png",
+
+    "compilationOptions": {
+        "define": [ "DNX" ]
+    },
+
+    "dependencies": {
+        "Nancy": { "target": "project" },
+        "Unity": "2.1.505.2",
+    },
+
+    "frameworks": {
+        "net451": { }
+    }
+}

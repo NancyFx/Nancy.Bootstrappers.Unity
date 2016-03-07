@@ -1,13 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.23107.0
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Bootstrappers.Unity", "Nancy.Bootstrappers.Unity\Nancy.Bootstrappers.Unity.csproj", "{79FF920D-9313-46B6-8AA9-6B7406AD742A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Bootstrappers.Unity", "src\Nancy.Bootstrappers.Unity.MSBuild\Nancy.Bootstrappers.Unity.csproj", "{79FF920D-9313-46B6-8AA9-6B7406AD742A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Bootstrappers.Unity.Tests", "Nancy.Bootstrappers.Unity.Tests\Nancy.Bootstrappers.Unity.Tests.csproj", "{56BA9434-95EF-4D67-B048-965E0A94A43E}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy.Bootstrappers.Unity.Tests", "test\Nancy.Bootstrappers.Unity.Tests.MSBuild\Nancy.Bootstrappers.Unity.Tests.csproj", "{56BA9434-95EF-4D67-B048-965E0A94A43E}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy", "..\dependencies\Nancy\src\Nancy.MSBuild\Nancy.csproj", "{34576216-0DCA-4B0F-A0DC-9075E75A676F}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nancy", "dependencies\Nancy\src\Nancy.MSBuild\Nancy.csproj", "{34576216-0DCA-4B0F-A0DC-9075E75A676F}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{9F83625A-361B-4284-8AF9-B99D6FD99350}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{81CC3DF0-FFD2-4CF1-AFA0-744557118794}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +48,11 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{79FF920D-9313-46B6-8AA9-6B7406AD742A} = {9F83625A-361B-4284-8AF9-B99D6FD99350}
+		{56BA9434-95EF-4D67-B048-965E0A94A43E} = {81CC3DF0-FFD2-4CF1-AFA0-744557118794}
+		{34576216-0DCA-4B0F-A0DC-9075E75A676F} = {9F83625A-361B-4284-8AF9-B99D6FD99350}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		EnterpriseLibraryConfigurationToolBinariesPath = packages\Unity.2.1.505.0\lib\NET35;packages\Unity.2.1.505.2\lib\NET35
