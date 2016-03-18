@@ -15,9 +15,10 @@
     ],
 
     "dependencies": {
+        "CommonServiceLocator": "1.0",
         "Nancy": { "target": "project" },
         "Nancy.Bootstrappers.Unity": { "target": "project" },
-        "Unity": "4.0.1",
+        "Unity": "2.1.505.2",
         "xunit": "2.1.0",
         "xunit.runner.dnx": "2.1.0-*"
     },
