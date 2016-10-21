@@ -12,10 +12,14 @@
 
     "dependencies": {
         "Nancy": { "target": "project" },
-        "Unity": "2.1.505.2"
+        "Unity": "4.0.1"
     },
 
     "frameworks": {
-        "net452": { }
+      "net452": {
+        "frameworkAssemblies": {
+          "System.Runtime": { "type": "build" }
+        }
+      }
     }
 }
