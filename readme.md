@@ -8,7 +8,7 @@ The easiest way to get the latest version of `UnityNancyBootstrapper` into your 
 
 ### Customizing
 
-By inheriting from `UnityNancyBootstrapper` you will gain access to the `IUnityContainer` of the application and request containers and can perform what ever reqistations that your application requires.
+By inheriting from `UnityNancyBootstrapper` you will gain access to the `IUnityContainer` of the application and request containers and can perform what ever registrations that your application requires.
 
 ```c#
 public class Bootstrapper : UnityNancyBootstrapper
