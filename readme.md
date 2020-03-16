@@ -39,18 +39,18 @@ public class Bootstrapper : UnityNancyBootstrapper
 
 You can also override the `GetApplicationContainer` method and return a pre-existing container instance, instead of having Nancy create one for you. This is useful if Nancy is co-existing with another application and you want them to share a single container.
 
+It is recommended that a child container of the application's main container is used so that if the application stops and restarts Nancy, the main container is not disposed of.
+
 ```c#
 protected override IUnityContainer GetApplicationContainer()
 {
     // Return application container instance
+	return parentContainer.CreateChildContainer();
 }
 ```
 
-If you end up overriding `GetApplicationContainer()`, you will have to manually add the `EnumerableExtension` to your container so that it is able to resolve `IEnumerable<T>` types properly (something that Unity has poor support for).
-
-```c#
-container.AddNewExtension<EnumerableExtension>();
-```
+## Changes
+V2.0.0 supports Unity 5.11.4
 
 ## Code of Conduct
 
