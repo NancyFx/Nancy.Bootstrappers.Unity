@@ -4,12 +4,12 @@
     <Authors>Andreas Håkansson, Steven Robbins and contributors</Authors>
     <CodeAnalysisRuleSet>..\..\dependencies\Nancy\Nancy.ruleset</CodeAnalysisRuleSet>
     <Description>An Unity bootstrapper for the Nancy web framework.</Description>
-    <DisableImplicitFrameworkReferences Condition=" '$(TargetFramework)' == 'net452' ">true</DisableImplicitFrameworkReferences>
+    <DisableImplicitFrameworkReferences Condition=" '$(TargetFramework)' == 'net472' ">true</DisableImplicitFrameworkReferences>
     <PackageIconUrl>http://nancyfx.org/nancy-nuget.png</PackageIconUrl>
     <PackageLicenseUrl>https://github.com/NancyFx/Nancy/blob/master/license.txt</PackageLicenseUrl>
     <PackageProjectUrl>http://nancyfx.org</PackageProjectUrl>
     <PackageTags>Nancy;Unity</PackageTags>
-    <TargetFramework>net452</TargetFramework>
+    <TargetFramework>net472</TargetFramework>
     <Version>2.0.0-clinteastwood</Version>
   </PropertyGroup>
 
@@ -18,10 +18,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Unity" Version="2.1.505.2" />
+    <PackageReference Include="Unity" Version="5.11.4" />
   </ItemGroup>
 
-  <ItemGroup Condition=" '$(TargetFramework)' == 'net452' ">
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net472' ">
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System" />
   </ItemGroup>
