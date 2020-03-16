@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
-using Microsoft.Practices.ObjectBuilder2;
-using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.Utility;
+using Unity;
+using Unity.Builder;
+using Unity.Strategies;
 
 namespace Nancy.Bootstrappers.Unity
 {
@@ -17,7 +17,7 @@ namespace Nancy.Bootstrappers.Unity
     /// </remarks>
     public class EnumerableResolutionStrategy : BuilderStrategy
     {
-        private delegate object Resolver(IBuilderContext context);
+        private delegate object Resolver(BuilderContext context);
 
         private static readonly MethodInfo GenericResolveEnumerableMethod =
             typeof(EnumerableResolutionStrategy).GetMethod("ResolveEnumerable",
@@ -31,17 +31,15 @@ namespace Nancy.Bootstrappers.Unity
         /// Do the PreBuildUp stage of construction. This is where the actual work is performed.
         /// </summary>
         /// <param name="context">Current build context.</param>
-        public override void PreBuildUp(IBuilderContext context)
+        public override void PreBuildUp(ref BuilderContext context)
         {
-            Guard.ArgumentNotNull(context, "context");
-
-            if (!IsResolvingIEnumerable(context.BuildKey.Type))
+            if (!IsResolvingIEnumerable(context.RegistrationType))
             {
                 return;
             }
 
             MethodInfo resolverMethod;
-            var typeToBuild = GetTypeToBuild(context.BuildKey.Type);
+            var typeToBuild = GetTypeToBuild(context.RegistrationType);
 
             if (IsResolvingLazy(typeToBuild))
             {
@@ -73,42 +71,39 @@ namespace Nancy.Bootstrappers.Unity
             return type.IsGenericType && type.GetGenericTypeDefinition() == typeof(Lazy<>);
         }
 
-        private static object ResolveLazyEnumerable<T>(IBuilderContext context)
+        private static object ResolveLazyEnumerable<T>(BuilderContext context)
         {
-            var container = context.NewBuildUp<IUnityContainer>();
-
             var typeToBuild = typeof(T);
             var typeWrapper = typeof(Lazy<T>);
 
-            return ResolveAll(container, typeToBuild, typeWrapper).OfType<Lazy<T>>().ToList();;
+            return ResolveAll(context, typeToBuild, typeWrapper).OfType<Lazy<T>>().ToList();
         }
 
-        private static object ResolveEnumerable<T>(IBuilderContext context)
+        private static object ResolveEnumerable<T>(BuilderContext context)
         {
-            var container = context.NewBuildUp<IUnityContainer>();
-
             var typeToBuild = typeof(T);
 
-            return ResolveAll(container, typeToBuild, typeToBuild).OfType<T>().ToList();
+            return ResolveAll(context, typeToBuild, typeToBuild).OfType<T>().ToList();
         }
 
-        private static IEnumerable<object> ResolveAll(IUnityContainer container, Type type, Type typeWrapper)
+        private static IEnumerable<object> ResolveAll(BuilderContext context, Type type, Type typeWrapper)
         {
-            var names = GetRegisteredNames(container, type);
+            var names = GetRegisteredNames(context, type);
 
             if (type.IsGenericType)
             {
-                names = names.Concat(GetRegisteredNames(container, type.GetGenericTypeDefinition()));
+                names = names.Concat(GetRegisteredNames(context, type.GetGenericTypeDefinition()));
             }
 
             return names.Distinct()
                 .Select(t => t.Name)
-                .Select(name => container.Resolve(typeWrapper, name));
+                .Select(name => context.Resolve(typeWrapper, name));
         }
 
-        private static IEnumerable<ContainerRegistration> GetRegisteredNames(IUnityContainer container, Type type)
+        private static IEnumerable<IContainerRegistration> GetRegisteredNames(BuilderContext context, Type type)
         {
-            return container.Registrations.Where(t => t.RegisteredType == type);
+            return context.Container.Registrations.Where(t => t.RegisteredType == type);
         }
     }
 }
+

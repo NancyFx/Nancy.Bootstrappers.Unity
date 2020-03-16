@@ -3,18 +3,21 @@ namespace Nancy.Bootstrappers.Unity
     using System;
     using System.Collections.Generic;
     using Diagnostics;
-    using Microsoft.Practices.Unity;
-    using Nancy.Configuration;
+    using Configuration;
     using Bootstrapper;
+    using global::Unity;
+    using global::Unity.Lifetime;
     using ViewEngines;
 
     /// <summary>
     /// Nancy bootstrapper for the Unity container.
     /// </summary>
-    public abstract class UnityNancyBootstrapper : NancyBootstrapperWithRequestContainerBase<IUnityContainer>
+    public abstract class UnityNancyBootstrapper : NancyBootstrapperWithRequestContainerBase<IUnityContainer>, IDisposable
     {
+        private bool isDisposing = false;
+
         /// <summary>
-        /// Gets the diagnostics for intialisation
+        /// Gets the diagnostics for initialisation
         /// </summary>
         /// <returns>An <see cref="IDiagnostics"/> implementation</returns>
         protected override IDiagnostics GetDiagnostics()
@@ -250,16 +253,25 @@ namespace Nancy.Bootstrappers.Unity
         }
 
         /// <summary>
-        /// Retreive a specific module instance from the container
+        /// Retrieve a specific module instance from the container
         /// </summary>
         /// <param name="container">Container to use</param>
         /// <param name="moduleType">Type of the module</param>
         /// <returns>An <see cref="INancyModule"/> instance</returns>
         protected override INancyModule GetModule(IUnityContainer container, Type moduleType)
         {
-            container.RegisterType(typeof(INancyModule), moduleType, new ContainerControlledLifetimeManager());
+            return container.Resolve(moduleType) as INancyModule;
+        }
 
-            return container.Resolve<INancyModule>();
+        public new void Dispose()
+        {
+            if (this.isDisposing)
+            {
+                return;
+            }
+
+            this.isDisposing = true;
+            base.Dispose();
         }
     }
 }

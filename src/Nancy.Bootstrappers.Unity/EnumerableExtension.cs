@@ -1,5 +1,5 @@
-﻿using Microsoft.Practices.Unity;
-using Microsoft.Practices.Unity.ObjectBuilder;
+﻿using Unity.Builder;
+using Unity.Extension;
 
 namespace Nancy.Bootstrappers.Unity
 {
@@ -8,8 +8,7 @@ namespace Nancy.Bootstrappers.Unity
         protected override void Initialize()
         {
             // Enumerable strategy
-            Context.Strategies.AddNew<EnumerableResolutionStrategy>(
-                UnityBuildStage.TypeMapping);
+            Context.Strategies.Add(new EnumerableResolutionStrategy(), UnityBuildStage.TypeMapping);
         }
     }
 }
